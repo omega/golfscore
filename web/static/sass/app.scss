@@ -1,0 +1,24 @@
+
+@import "bulma";
+
+
+.iconic * {
+  fill: $primary;
+  stroke: $primary;
+}
+
+.hero.is-primary {
+  .logo {
+    span {
+      font-weight: 100;
+      font-size: 2em;
+      padding-left: 0.1em;
+      color: $primary-invert;
+    }
+
+    .iconic * {
+      fill: $primary-invert;
+      stroke: $primary-invert;
+    }
+  }
+}

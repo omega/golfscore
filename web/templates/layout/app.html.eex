@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Hello Golf!</title>
+    <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+  </head>
+
+  <body>
+    <section class="hero is-primary is-bold">
+      <div class="hero-head">
+        <header class="nav">
+          <div class="container">
+            <div class="nav-left">
+              <a class="nav-item logo">
+                <img class="iconic iconic-md" data-src="<%= static_path(@conn, "/iconic/target.svg") %>">
+                <span>Golfscore</span>
+              </a>
+            </div>
+            <span class="nav-toggle">
+              <span></span>
+              <span></span>
+              <span></span>
+            </span>
+            <div class="nav-right nav-menu">
+              <a class="nav-item is-active">
+                Home
+              </a>
+              <a class="nav-item">
+                Examples
+              </a>
+              <a class="nav-item">
+                Documentation
+              </a>
+              <span class="nav-item">
+                <a class="button is-primary is-inverted">
+                  <span class="icon">
+                    <img class="iconic iconic-sm" data-src="<%= static_path(@conn, "/iconic/cloud-transfer.svg") %>">
+                  </span>
+                  <span>Download</span>
+                </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      <div class="hero-body">
+        <div class="container">
+          <h1 class="title">
+            Golfscore
+          </h1>
+          <h2 class="subtitle">
+            Letting you track the progress of your friends since 2016
+          </h2>
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <article class="message is-info" role="alert">
+          <div class="message-body">
+            <%= get_flash(@conn, :info) %>
+          </div>
+        </article>
+        <article class="message is-danger" role="alert">
+          <div class="message-body">
+            <%= get_flash(@conn, :error) %>
+          </div>
+        </article>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <div class="content">
+          <main role="main">
+          <%= render @view_module, @view_template, assigns %>
+          </main>
+        </div>
+
+      </div>
+    </section>
+    <footer class="footer">
+      <div class="container">
+        <div class="content has-text-centered">
+          <p><strong>Golfscore</strong> by Andreas</p>
+        </div>
+      </div>
+    </footer>
+    <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
+  </body>
+</html>
