@@ -39,3 +39,11 @@ form.link {
     }
   }
 }
+
+
+
+@include mobile {
+  .nav-item {
+    padding: 10px !important;
+  }
+}
