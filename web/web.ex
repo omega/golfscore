@@ -44,7 +44,7 @@ defmodule Golf.Web do
       use Phoenix.View, root: "web/templates"
 
       # Import convenience functions from controllers
-      import Phoenix.Controller, only: [get_csrf_token: 0, get_flash: 2, view_module: 1]
+      import Phoenix.Controller, only: [get_csrf_token: 0, get_flash: 2, view_module: 1, get_flash: 1]
 
       # Use all HTML functionality (forms, tags, etc)
       use Phoenix.HTML
@@ -52,6 +52,56 @@ defmodule Golf.Web do
       import Golf.Router.Helpers
       import Golf.ErrorHelpers
       import Golf.Gettext
+
+      def iconic(conn, opts) do
+        {size, opts} = Keyword.pop(opts, :size, "sm")
+        {icon, opts} = Keyword.pop(opts, :icon)
+        {state, opts} = Keyword.pop(opts, :state)
+        unless icon do
+          raise ArgumentError, "expected non-nil icon, got #{inspect icon}"
+        end
+
+        path = static_path(conn, "/iconic/#{icon}.svg")
+        data = [src: path]
+        if state do
+          Keyword.put_new(data, :state, state)
+        end
+        tag(:img, [class: "iconic iconic-#{size}", data: data])
+      end
+
+
+      def render_flash(conn) do
+        get_flash(conn)
+        |> flash_message
+      end
+
+      defp flash_message(%{"info" => msg}) do
+        body = content_tag(:div, msg, [class: "message-body"])
+        content_tag(:article, body, [class: "message is-info"])
+        |> container
+      end
+
+      defp flash_message(%{"error" => msg}) do
+        body = content_tag(:div, msg, [class: "message-body"])
+        content_tag(:article, body, [class: "message is-danger"])
+        |> container
+      end
+
+      defp flash_message(_) do
+        nil
+      end
+
+      defp container(body) do
+        container = content_tag(:div, body, [class: "container"])
+        content_tag(:section, container, [class: "section"])
+      end
+
+
+      def nav_item(conn, text, opts) do
+        # TODO: add is-active class if we are active one, check conn perhaps?
+        opts = Keyword.put_new(opts, :class, "nav-item")
+        link(text, opts)
+      end
     end
   end
 

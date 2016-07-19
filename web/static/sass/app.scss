@@ -1,6 +1,23 @@
 
 @import "bulma";
 
+form.link {
+  display: inline;
+}
+
+.content td.is-icon {
+  a {
+    border-bottom: 0;
+    line-height: 24px;
+    font-size: 21px;
+    padding-top: 4px;
+    display: block;
+  }
+  svg.iconic.iconic-sm:not(.iconic-size-md):not(.iconic-size-lg) {
+    width: 24px;
+    height: 24px;
+  }
+}
 
 .iconic * {
   fill: $primary;
@@ -12,7 +29,7 @@
     span {
       font-weight: 100;
       font-size: 2em;
-      padding-left: 0.1em;
+      padding-left: 0.2em;
       color: $primary-invert;
     }
 

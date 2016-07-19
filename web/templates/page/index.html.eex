@@ -1,3 +1,15 @@
+<div class="columns">
+  <div class="column is-8">
+    <p>Welcome to Golfscore, the app that lets you track golfscores on courses
+    around the globe, lol!</p>
 
-          <p>Welcome to Golfscore, the app that lets you track golfscores on courses
-          around the globe, lol!</p>
+  </div>
+  <div class="column">
+    <nav class="panel">
+      <div class="panel-heading">Courses</div>
+      <%= for course <- @courses do %>
+        <%= link course.name, to: course_path(@conn, :show, course), class: "panel-block" %>
+      <% end %>
+    </nav>
+  </div>
+</div>
