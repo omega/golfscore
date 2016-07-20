@@ -32,16 +32,18 @@
       <td><%= hole.par %></td>
 
       <td class="text-right">
-        <%= link "Show", to: course_hole_path(@conn, :show, @course, hole), class: "btn btn-default btn-xs" %>
-        <%= link "Edit", to: course_hole_path(@conn, :edit, @course, hole), class: "btn btn-default btn-xs" %>
-        <%= link "Delete", to: course_hole_path(@conn, :delete, @course, hole), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+        <%= link "Show", to: course_hole_path(@conn, :show, @course, hole), class: "button is-small" %>
+        <%= if current_user(@conn) do %>
+          <%= link "Edit", to: course_hole_path(@conn, :edit, @course, hole), class: "button is-small" %>
+          <%= link "Delete", to: course_hole_path(@conn, :delete, @course, hole), method: :delete, data: [confirm: "Are you sure?"], class: "button is-danger is-small" %>
+        <% end %>
       </td>
     </tr>
 <% end %>
   </tbody>
 </table>
 
-<%= link "New hole", to: course_hole_path(@conn, :new, @course) %>
-
-<%= link "Edit", to: course_path(@conn, :edit, @course) %>
-<%= link "Back", to: course_path(@conn, :index) %>
+<%= if current_user(@conn) do %>
+  <%= link "New hole", to: course_hole_path(@conn, :new, @course) %>
+  <%= link "Edit", to: course_path(@conn, :edit, @course) %>
+<% end %>

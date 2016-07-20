@@ -52,6 +52,10 @@ defmodule Golf.Web do
       import Golf.Router.Helpers
       import Golf.ErrorHelpers
       import Golf.Gettext
+      
+      def current_user(conn) do
+        Plug.Conn.get_session(conn, :current_user)
+      end
 
       def iconic(conn, opts) do
         {size, opts} = Keyword.pop(opts, :size, "sm")

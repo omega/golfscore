@@ -12,19 +12,22 @@
   <tbody>
 <%= for course <- @courses do %>
     <tr>
-      <td><%= course.name %></td>
+      <td><%= link course.name, to: course_path(@conn, :show, course) %></td>
       <td class="is-icon">
         <%= link iconic(@conn, icon: "map"), to: course.map_link, class: "" %>
       </td>
 
       <td class="text-right">
-        <%= link "Show", to: course_path(@conn, :show, course), class: "button is-small" %>
-        <%= link "Edit", to: course_path(@conn, :edit, course), class: "button is-small" %>
-        <%= link "Delete", to: course_path(@conn, :delete, course), method: :delete, data: [confirm: "Are you sure?"], class: "button is-danger is-small" %>
+        <%= if current_user(@conn) do %>
+          <%= link "Edit", to: course_path(@conn, :edit, course), class: "button is-small" %>
+          <%= link "Delete", to: course_path(@conn, :delete, course), method: :delete, data: [confirm: "Are you sure?"], class: "button is-danger is-small" %>
+        <% end %>
       </td>
     </tr>
 <% end %>
   </tbody>
 </table>
 
-<%= link "New course", to: course_path(@conn, :new) %>
+<%= if current_user(@conn) do %>
+  <%= link "New course", to: course_path(@conn, :new) %>
+<% end %>
