@@ -51,7 +51,7 @@ defmodule Golf.CourseController do
   def show(conn, %{"id" => id}) do
     course = Course
       |> Repo.get!(id)
-      |> Repo.preload(:holes)
+      |> Repo.preload holes: from(h in Hole, order_by: h.num)
     render(conn, "show.html", course: course)
   end
 
