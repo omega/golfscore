@@ -1,15 +1,15 @@
-defmodule Golf.Course do
+defmodule Golf.Hole do
   use Golf.Web, :model
 
-  schema "courses" do
-    has_many :holes, Golf.Hole
-    field :name, :string
-    field :map_link, :string
+  schema "holes" do
+    field :num, :integer
+    field :par, :integer
+    belongs_to :course, Golf.Course
 
     timestamps
   end
 
-  @required_fields ~w(name map_link)
+  @required_fields ~w(num par)
   @optional_fields ~w()
 
   @doc """

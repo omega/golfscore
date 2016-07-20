@@ -1,0 +1,6 @@
+<h2>New hole</h2>
+
+<%= render "form.html", changeset: @changeset,
+                        action: course_hole_path(@conn, :create, @course) %>
+
+<%= link "Back", to: course_path(@conn, :show, @course) %>

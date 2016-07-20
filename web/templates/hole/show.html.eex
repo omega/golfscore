@@ -1,0 +1,23 @@
+<h2>Show hole</h2>
+
+<ul>
+
+  <li>
+    <strong>Num:</strong>
+    <%= @hole.num %>
+  </li>
+
+  <li>
+    <strong>Par:</strong>
+    <%= @hole.par %>
+  </li>
+
+  <li>
+    <strong>Course:</strong>
+    <%= @hole.course_id %>
+  </li>
+
+</ul>
+
+<%= link "Edit", to: course_hole_path(@conn, :edit, @course, @hole) %>
+<%= link "Back", to: course_path(@conn, :show, @course) %>

@@ -14,5 +14,34 @@
 
 </ul>
 
+<h2>Listing holes</h2>
+
+<table class="table is-narrow">
+  <thead>
+    <tr>
+      <th>Num</th>
+      <th>Par</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for hole <- @course.holes do %>
+    <tr>
+      <td><%= hole.num %></td>
+      <td><%= hole.par %></td>
+
+      <td class="text-right">
+        <%= link "Show", to: course_hole_path(@conn, :show, @course, hole), class: "btn btn-default btn-xs" %>
+        <%= link "Edit", to: course_hole_path(@conn, :edit, @course, hole), class: "btn btn-default btn-xs" %>
+        <%= link "Delete", to: course_hole_path(@conn, :delete, @course, hole), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<%= link "New hole", to: course_hole_path(@conn, :new, @course) %>
+
 <%= link "Edit", to: course_path(@conn, :edit, @course) %>
 <%= link "Back", to: course_path(@conn, :index) %>
