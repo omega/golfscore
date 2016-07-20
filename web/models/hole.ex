@@ -21,5 +21,7 @@ defmodule Golf.Hole do
   def changeset(model, params \\ :empty) do
     model
     |> cast(params, @required_fields, @optional_fields)
+    |> validate_number(:num, greater_than: 0, less_than: 50)
+    |> validate_number(:par, greater_than: 0, less_than: 10)
   end
 end

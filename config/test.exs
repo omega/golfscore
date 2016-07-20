@@ -12,8 +12,8 @@ config :logger, level: :warn
 # Configure your database
 config :golf, Golf.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
-  password: "postgres",
+  username: "golf_dev",
+  password: "golf_dev",
   database: "golf_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox

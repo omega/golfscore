@@ -2,7 +2,10 @@ defmodule Golf.CourseController do
   use Golf.Web, :controller
 
   alias Golf.Course
+  alias Golf.Hole
 
+  require Logger
+  
   plug :scrub_params, "course" when action in [:create, :update]
 
   def index(conn, _params) do
@@ -16,10 +19,26 @@ defmodule Golf.CourseController do
   end
 
   def create(conn, %{"course" => course_params}) do
+    {holes, course_params} = Map.pop(course_params, "holes")
     changeset = Course.changeset(%Course{}, course_params)
 
     case Repo.insert(changeset) do
-      {:ok, _course} ->
+      {:ok, course} ->
+        # Create N holes with default par 3
+
+        if holes do
+          for h <- 1..holes do
+            cs = course
+              |> build_assoc(:holes)
+              |> Hole.changeset(%{num: h, par: 3})
+            case Repo.insert(cs) do
+              {:ok, _hole} ->
+                nil
+              {:error, cs} ->
+                render(conn, "new.html", changeset: changeset)
+            end
+          end
+        end
         conn
         |> put_flash(:info, "Course created successfully.")
         |> redirect(to: course_path(conn, :index))

@@ -3,7 +3,7 @@ defmodule Golf.HoleTest do
 
   alias Golf.Hole
 
-  @valid_attrs %{num: 42, par: 42}
+  @valid_attrs %{num: 18, par: 3}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do

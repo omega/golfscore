@@ -2,6 +2,7 @@ defmodule Golf.HoleController do
   use Golf.Web, :controller
 
   alias Golf.Hole
+  require Logger
 
   plug :scrub_params, "hole" when action in [:create, :update]
   plug :assign_course
@@ -44,9 +45,10 @@ defmodule Golf.HoleController do
   def update(conn, %{"id" => id, "hole" => hole_params}) do
     hole = Repo.get!(assoc(conn.assigns[:course], :holes), id)
     changeset = Hole.changeset(hole, hole_params)
-
+    Logger.debug("#{inspect changeset}")
     case Repo.update(changeset) do
-      {:ok, hole} ->
+      {:ok, _hole} ->
+        Logger.debug "updated hole!"
         conn
         |> put_flash(:info, "Hole updated successfully.")
         |> redirect(to: course_path(conn, :show, conn.assigns[:course]))
@@ -70,10 +72,18 @@ defmodule Golf.HoleController do
   defp assign_course(conn, _opts) do
     case conn.params do
       %{"course_id" => course_id} ->
-        course = Repo.get(Golf.Course, course_id)
-        assign(conn, :course, course)
-      _ ->
-        conn
+        case Repo.get(Golf.Course, course_id) do
+          nil -> invalid_course(conn)
+          course -> assign(conn, :course, course)
+        end
+      _ -> invalid_course(conn)
     end
+  end
+
+  defp invalid_course(conn) do
+    conn
+    |> put_flash(:error, "Invalid course!")
+    |> redirect(to: page_path(conn, :index))
+    |> halt
   end
 end

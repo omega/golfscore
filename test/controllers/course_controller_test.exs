@@ -1,8 +1,10 @@
 defmodule Golf.CourseControllerTest do
   use Golf.ConnCase
 
+  require Logger
   alias Golf.Course
-  @valid_attrs %{map_link: "some content", name: "some content"}
+  @valid_attrs %{map_link: "some content", name: "some content", holes: 18}
+  @query_attrs %{map_link: "some content", name: "some content"}
   @invalid_attrs %{}
 
   test "lists all entries on index", %{conn: conn} do
@@ -18,7 +20,12 @@ defmodule Golf.CourseControllerTest do
   test "creates resource and redirects when data is valid", %{conn: conn} do
     conn = post conn, course_path(conn, :create), course: @valid_attrs
     assert redirected_to(conn) == course_path(conn, :index)
-    assert Repo.get_by(Course, @valid_attrs)
+    course = Course
+      |> Repo.get_by(@query_attrs)
+      |> Repo.preload(:holes)
+    assert course
+
+    assert length(course.holes) == 18
   end
 
   test "does not create resource and renders errors when data is invalid", %{conn: conn} do
@@ -48,7 +55,7 @@ defmodule Golf.CourseControllerTest do
     course = Repo.insert! %Course{}
     conn = put conn, course_path(conn, :update, course), course: @valid_attrs
     assert redirected_to(conn) == course_path(conn, :show, course)
-    assert Repo.get_by(Course, @valid_attrs)
+    assert Repo.get_by(Course, @query_attrs)
   end
 
   test "does not update chosen resource and renders errors when data is invalid", %{conn: conn} do
