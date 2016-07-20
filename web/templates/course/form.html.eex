@@ -17,11 +17,13 @@
   <%= error_tag f, :map_link %>
   </p>
 
-  <%= label f, :make_holes, class: "label" %>
-  <p class="control">
-  <%= number_input f, :make_holes, class: "input" %>
-  <%= error_tag f, :make_holes %>
-  </p>
+  <%= unless @object do %>
+    <%= label f, :make_holes, class: "label" %>
+    <p class="control">
+    <%= number_input f, :make_holes, class: "input" %>
+    <%= error_tag f, :make_holes %>
+    </p>
+  <% end %>
   <p class="control">
   <%= submit "Submit", class: "button is-primary" %>
   </p>
