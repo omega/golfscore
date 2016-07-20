@@ -12,12 +12,8 @@
     <%= @user.email %>
   </li>
 
-  <li>
-    <strong>Password digest:</strong>
-    <%= @user.password_digest %>
-  </li>
-
 </ul>
 
+<%= if current_user(@conn).id == @user.id do %>
 <%= link "Edit", to: user_path(@conn, :edit, @user) %>
-<%= link "Back", to: user_path(@conn, :index) %>
+<% end %>

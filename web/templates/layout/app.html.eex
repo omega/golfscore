@@ -32,6 +32,13 @@
               <%= nav_item @conn, "Courses", to: course_path(@conn, :index) %>
               <%= if user = current_user(@conn) do %>
                 <span class="nav-item">
+                  <span class="icon is-user-profile">
+                    <a href="<%= user_path(@conn, :show, user.id) %>">
+                      <img src="<%= gravatar(@conn.scheme, user.email) %>">
+                    </a>
+                  </span>
+                </span>
+                <span class="nav-item">
                   <a class="button is-primary is-inverted" href="<%= session_path(@conn, :logout) %>">
                     <span class="icon">
                       <%= iconic(@conn, icon: "account", state: "logout") %>

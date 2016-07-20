@@ -52,7 +52,18 @@ defmodule Golf.Web do
       import Golf.Router.Helpers
       import Golf.ErrorHelpers
       import Golf.Gettext
-      
+      import Exgravatar
+      import Logger
+
+
+      def gravatar(scheme, email) when scheme == :http  do
+          gravatar_url email, secure: false
+      end
+
+      def gravatar(scheme, email) when scheme == :https do
+        gravatar_url email, secure: true
+      end
+
       def current_user(conn) do
         Plug.Conn.get_session(conn, :current_user)
       end
