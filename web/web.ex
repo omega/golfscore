@@ -56,11 +56,31 @@ defmodule Golf.Web do
       import Logger
 
 
-      def gravatar(scheme, email) when scheme == :http  do
-          gravatar_url email, secure: false
+      def gravatar(conn, email) do
+        # lookup "x-forwarded-proto", and return based on that
+        conn
+        |> get_forwarded_proto
+        |> log_proto
+        |> get_gravatar(email)
       end
 
-      def gravatar(scheme, email) when scheme == :https do
+      defp log_proto(proto) do
+        Logger.debug "Proto: #{proto}"
+        proto
+      end
+
+      defp get_forwarded_proto(conn) do
+        Plug.Conn.get_req_header(conn, "x-forwarded-proto")
+        |> List.first
+      end
+
+
+      defp get_gravatar(proto, email) when is_nil(proto) do
+        Logger.debug "http gravatar"
+        gravatar_url email, secure: false
+      end
+
+      defp get_gravatar(_proto, email) do
         gravatar_url email, secure: true
       end
 
