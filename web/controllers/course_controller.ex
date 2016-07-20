@@ -19,13 +19,15 @@ defmodule Golf.CourseController do
   end
 
   def create(conn, %{"course" => course_params}) do
-    {holes, course_params} = Map.pop(course_params, "holes")
+    {holes, course_params} = Map.pop(course_params, "make_holes")
     changeset = Course.changeset(%Course{}, course_params)
+
+    {holes, _} = Integer.parse(holes)
 
     case Repo.insert(changeset) do
       {:ok, course} ->
         # Create N holes with default par 3
-
+        Logger.info "Creating #{holes} holes"
         if holes do
           for h <- 1..holes do
             cs = course
@@ -34,7 +36,7 @@ defmodule Golf.CourseController do
             case Repo.insert(cs) do
               {:ok, _hole} ->
                 nil
-              {:error, cs} ->
+              {:error, _cs} ->
                 render(conn, "new.html", changeset: changeset)
             end
           end

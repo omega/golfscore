@@ -2,7 +2,7 @@ defmodule Golf.Course do
   use Golf.Web, :model
 
   schema "courses" do
-    has_many :holes, Golf.Hole
+    has_many :holes, Golf.Hole, on_delete: :delete_all
     field :name, :string
     field :map_link, :string
 

@@ -3,6 +3,8 @@ defmodule Golf.CourseControllerTest do
 
   require Logger
   alias Golf.Course
+  alias Golf.Hole
+  
   @valid_attrs %{map_link: "some content", name: "some content", holes: 18}
   @query_attrs %{map_link: "some content", name: "some content"}
   @invalid_attrs %{}
@@ -65,9 +67,23 @@ defmodule Golf.CourseControllerTest do
   end
 
   test "deletes chosen resource", %{conn: conn} do
-    course = Repo.insert! %Course{}
+    course = build_course(9)
     conn = delete conn, course_path(conn, :delete, course)
     assert redirected_to(conn) == course_path(conn, :index)
     refute Repo.get(Course, course.id)
+  end
+
+  defp build_course(holes) do
+    changeset = Course.changeset(%Course{}, %{name: "Test course", map_link: "http://some/link"})
+
+    course = Repo.insert!(changeset)
+
+    for h <- 1..holes do
+      cs = course
+        |> build_assoc(:holes)
+        |> Hole.changeset(%{num: h, par: 3})
+      Repo.insert!(cs)
+    end
+    course
   end
 end
