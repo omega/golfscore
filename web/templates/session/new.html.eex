@@ -1,3 +1,18 @@
-<h2>Login</h2>
+<div class="columns">
+  <div class="column is-half is-offset-one-quarter">
+    <h2>Login</h2>
 
-<%= render "form.html", changeset: @changeset, action: session_path(@conn, :create) %>
+    <%= render "form.html", changeset: @changeset, action: session_path(@conn, :create) %>
+  </div>
+</div>
+<div class="columns">
+  <div class="column is-half is-offset-one-quarter">
+    <article class="message is-info">
+      <div class="message-header">Not a user yet?</div>
+      <div class="message-body is-clearfix">
+        <p>It is super easy to register, just click and fill out the form!</p>
+        <%= link "Register", to: user_path(@conn, :new), class: "button is-primary is-pulled-right" %>
+      </div>
+    </article>
+  </div>
+</div>
