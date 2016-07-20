@@ -5,11 +5,6 @@ defmodule Golf.UserController do
 
   plug :scrub_params, "user" when action in [:create, :update]
 
-  def index(conn, _params) do
-    users = Repo.all(User)
-    render(conn, "index.html", users: users)
-  end
-
   def new(conn, _params) do
     changeset = User.changeset(%User{})
     render(conn, "new.html", changeset: changeset)
@@ -34,6 +29,7 @@ defmodule Golf.UserController do
   end
 
   def edit(conn, %{"id" => id}) do
+    # TODO: Check that we are the same user?
     user = Repo.get!(User, id)
     changeset = User.changeset(user)
     render(conn, "edit.html", user: user, changeset: changeset)

@@ -30,14 +30,25 @@
             <div class="nav-right nav-menu">
               <%= nav_item @conn, "Home", to: page_path(@conn, :index) %>
               <%= nav_item @conn, "Courses", to: course_path(@conn, :index) %>
-              <span class="nav-item">
-                <a class="button is-primary is-inverted" href="<%= session_path(@conn, :new) %>">
-                  <span class="icon">
-                    <%= iconic(@conn, icon: "account", state: "logout") %>
-                  </span>
-                  <span>Login</span>
-                </a>
-              </span>
+              <%= if user = current_user(@conn) do %>
+                <span class="nav-item">
+                  <a class="button is-primary is-inverted" href="<%= session_path(@conn, :logout) %>">
+                    <span class="icon">
+                      <%= iconic(@conn, icon: "account", state: "logout") %>
+                    </span>
+                    <span>Log out</span>
+                  </a>
+                </span>
+              <% else %>
+                <span class="nav-item">
+                  <a class="button is-primary is-inverted" href="<%= session_path(@conn, :new) %>">
+                    <span class="icon">
+                      <%= iconic(@conn, icon: "account", state: "login") %>
+                    </span>
+                    <span>Log in</span>
+                  </a>
+                </span>
+              <% end %>
             </div>
           </div>
         </div>

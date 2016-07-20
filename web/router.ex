@@ -18,6 +18,7 @@ defmodule Golf.Router do
 
     get "/", PageController, :index
     resources "/sessions", SessionController, only: [:new, :create]
+    get "/sessions/logout", SessionController, :logout
     resources "/users", UserController
     resources "/courses", CourseController do
       resources "/holes", HoleController
