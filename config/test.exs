@@ -17,3 +17,6 @@ config :golf, Golf.Repo,
   database: "golf_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
+
+
+config :comeonin, bcrypt_log_rounds: 4

@@ -5,7 +5,7 @@ defmodule Golf.CourseControllerTest do
   alias Golf.Course
   alias Golf.Hole
   
-  @valid_attrs %{map_link: "some content", name: "some content", holes: 18}
+  @valid_attrs %{map_link: "some content", name: "some content", make_holes: "18"}
   @query_attrs %{map_link: "some content", name: "some content"}
   @invalid_attrs %{}
 

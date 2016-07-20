@@ -22,13 +22,12 @@ defmodule Golf.CourseController do
     {holes, course_params} = Map.pop(course_params, "make_holes")
     changeset = Course.changeset(%Course{}, course_params)
 
-    {holes, _} = Integer.parse(holes)
-
     case Repo.insert(changeset) do
       {:ok, course} ->
         # Create N holes with default par 3
-        Logger.info "Creating #{holes} holes"
         if holes do
+          {holes, _} = Integer.parse(holes)
+          Logger.info "Creating #{holes} holes"
           for h <- 1..holes do
             cs = course
               |> build_assoc(:holes)
