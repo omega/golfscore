@@ -1,20 +1,10 @@
-<h2>Show course</h2>
-
-<ul>
-
-  <li>
-    <strong>Name:</strong>
-    <%= @course.name %>
-  </li>
-
-  <li>
-    <strong>Map link:</strong>
-    <%= @course.map_link %>
-  </li>
-
-</ul>
-
-<h2>Listing holes</h2>
+<h1>
+  <%= @course.name %>
+  <span class="icon is-pulled-right">
+    <%= link iconic(@conn, icon: "map", size: "md"), to: @course.map_link, class: "" %>
+  </span>
+</h1>
+<h2>Holes</h2>
 
 <table class="table is-narrow">
   <thead>

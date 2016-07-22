@@ -5,6 +5,11 @@ form.link {
   display: inline;
 }
 
+.icon {
+  a {
+    border-bottom: 0 !important;
+  }
+}
 .content td.is-icon {
   a {
     border-bottom: 0;

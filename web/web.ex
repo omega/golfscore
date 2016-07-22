@@ -65,7 +65,7 @@ defmodule Golf.Web do
       end
 
       defp log_proto(proto) do
-        Logger.debug "Proto: #{proto}"
+        Logger.info "Proto: #{proto}"
         proto
       end
 
