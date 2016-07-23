@@ -1,0 +1,13 @@
+<h2>Add player to round at <%= @round.course.name %></h2>
+
+<ul>
+  <%= for player <- @users do %>
+    <li>
+      <%= player.name %>
+      <%= link "Add", to: round_round_path(@conn, :create_player, @round, user: player.id), method: :post, class: "button is-primary is-small" %>
+    </li>
+  <% end %>
+</ul>
+
+<%= link "Done adding players", to: round_path(@conn, :show, @round), class: "button is-primary" %>
+

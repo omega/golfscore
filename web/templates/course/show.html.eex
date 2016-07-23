@@ -4,6 +4,9 @@
     <%= link iconic(@conn, icon: "map", size: "md"), to: @course.map_link, class: "" %>
   </span>
 </h1>
+<%= if current_user(@conn) do %>
+  <%= link "Start round", to: round_path(@conn, :new, course: @course.id), class: "button is-primary is-large" %>
+<% end %>
 <h2>Holes</h2>
 
 <table class="table is-narrow">

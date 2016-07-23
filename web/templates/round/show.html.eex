@@ -1,0 +1,47 @@
+<h2>Show round</h2>
+
+<ul>
+  <li>
+    <strong>Date:</strong>
+    <%= @round.date %>
+  </li>
+
+  <li>
+    <strong>Course:</strong>
+    <%= link @round.course.name, to: course_path(@conn, :show, @round.course) %>
+  </li>
+</ul>
+
+<%= link "Add player", to: round_round_path(@conn, :new_player, @round), class: "button is-primary" %>
+
+<!--
+  <ul>
+  <%= for player <- @round.players do %>
+    <li><%= player.name %></li>
+  <% end %>
+  </ul>
+
+-->
+<table class="table">
+  <thead>
+    <tr><th>Holes</th>
+      <%= for player <- @round.players do %>
+        <th><%= player.name %></th>
+      <% end %>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= for hole <- @round.course.holes do %>
+      <tr><td><%= hole.num %> <small>par <%= hole.par %></small></td>
+        <%= for player <- @round.players do %>
+          <td><%= @scores[hole.id][player.id] %></td>
+        <% end %>
+        <td>
+          <%= link "Register score", to: round_round_path(@conn, :record_score, @round, hole), class: "button is-primary is-small" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+

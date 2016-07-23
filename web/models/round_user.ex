@@ -1,18 +1,14 @@
-defmodule Golf.Course do
+defmodule Golf.RoundUser do
   use Golf.Web, :model
 
-  schema "courses" do
-    field :name, :string
-    field :map_link, :string
+  schema "rounds_users" do
+    belongs_to :round, Golf.Round
+    belongs_to :user, Golf.User
 
     timestamps
-
-    has_many :holes, Golf.Hole, on_delete: :delete_all
-
-    has_many :rounds, Golf.Round
   end
 
-  @required_fields ~w(name map_link)
+  @required_fields ~w(round, user)
   @optional_fields ~w()
 
   @doc """

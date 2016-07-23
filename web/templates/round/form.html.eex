@@ -1,0 +1,18 @@
+<%= form_for @changeset, @action, fn f -> %>
+  <%= if @changeset.action do %>
+    <p class="notification is-danger">
+      Oops, something went wrong! Please check the errors below.
+    </p>
+  <% end %>
+
+  <%= label f, :date, class: "label" %>
+  <p class="control">
+    <%= date_select f, :date, class: "input" %>
+    <%= error_tag f, :date %>
+  </p>
+
+  <%= hidden_input f, :course_id %>
+  <p class="control">
+    <%= submit "Submit", class: "button is-primary" %>
+  </p>
+<% end %>

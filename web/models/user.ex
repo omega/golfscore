@@ -12,6 +12,9 @@ defmodule Golf.User do
 
     field :password, :string, virtual: true
     field :password_confirmation, :string, virtual: true
+
+
+    many_to_many :rounds, Golf.Round, join_through: Golf.RoundUser
   end
 
   @required_fields ~w(name email password password_confirmation)

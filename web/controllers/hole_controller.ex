@@ -33,6 +33,7 @@ defmodule Golf.HoleController do
 
   def show(conn, %{"id" => id}) do
     hole = Repo.get!(assoc(conn.assigns[:course], :holes), id)
+    |> Repo.preload(:course)
     render(conn, "show.html", hole: hole)
   end
 

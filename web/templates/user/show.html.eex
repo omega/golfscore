@@ -17,3 +17,10 @@
 <%= if current_user(@conn).id == @user.id do %>
 <%= link "Edit", to: user_path(@conn, :edit, @user) %>
 <% end %>
+
+<h3>Rounds</h3>
+<ul>
+  <%= for round <- @user.rounds do %>
+    <li><%= round.id %></li>
+  <% end %>
+</ul>

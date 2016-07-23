@@ -1,18 +1,16 @@
-defmodule Golf.Course do
+defmodule Golf.Round do
   use Golf.Web, :model
 
-  schema "courses" do
-    field :name, :string
-    field :map_link, :string
+  schema "rounds" do
+    field :date, Ecto.Date
+    belongs_to :course, Golf.Course
+
+    many_to_many :players, Golf.User, join_through: Golf.RoundUser
 
     timestamps
-
-    has_many :holes, Golf.Hole, on_delete: :delete_all
-
-    has_many :rounds, Golf.Round
   end
 
-  @required_fields ~w(name map_link)
+  @required_fields ~w(date course_id)
   @optional_fields ~w()
 
   @doc """
@@ -24,5 +22,6 @@ defmodule Golf.Course do
   def changeset(model, params \\ :empty) do
     model
     |> cast(params, @required_fields, @optional_fields)
+    |> foreign_key_constraint(:course_id)
   end
 end

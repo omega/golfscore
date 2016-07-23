@@ -1,0 +1,28 @@
+<h2>Listing rounds</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Course</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for round <- @rounds do %>
+    <tr>
+      <td><%= round.date %></td>
+      <td><%= round.course_id %></td>
+
+      <td class="text-right">
+        <%= link "Show", to: round_path(@conn, :show, round), class: "btn btn-default btn-xs" %>
+        <%= link "Edit", to: round_path(@conn, :edit, round), class: "btn btn-default btn-xs" %>
+        <%= link "Delete", to: round_path(@conn, :delete, round), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<%= link "New round", to: round_path(@conn, :new) %>

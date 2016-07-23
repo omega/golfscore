@@ -14,6 +14,8 @@ config :golf, Golf.Endpoint,
   pubsub: [name: Golf.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
+config :golf, ecto_repos: [Golf.Repo]
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",

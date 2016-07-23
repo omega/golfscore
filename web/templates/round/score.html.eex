@@ -1,0 +1,14 @@
+<h2>Scoring</h2>
+<h3>Hole <%= @hole.num %> <small>@ <%= @hole.course.name %>, par <%= @hole.par %></small></h3>
+
+<%= form_for @conn, round_round_path(@conn, :save_score, @round, @hole), [as: :score], fn f -> %>
+
+  <%= for player <- @round.players do %>
+    <label class="label"><%= player.name %></label>
+    <p class="control">
+    <input type="number" class="input" name="score[<%= player.id %>]" min="1" max="15">
+    </p>
+  <% end %>
+
+<button class="button is-primary">Save</button>
+<% end %>

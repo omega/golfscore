@@ -55,6 +55,8 @@ defmodule Golf.Web do
       import Exgravatar
       import Logger
 
+      # XXX: NEed to move these somewhere, make our own helper maybe, and
+      # import it here?
 
       def gravatar(conn, email) do
         # lookup "x-forwarded-proto", and return based on that

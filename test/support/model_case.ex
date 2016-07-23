@@ -26,10 +26,7 @@ defmodule Golf.ModelCase do
   end
 
   setup tags do
-    unless tags[:async] do
-      Ecto.Adapters.SQL.restart_test_transaction(Golf.Repo, [])
-    end
-
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Golf.Repo)
     :ok
   end
 

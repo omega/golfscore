@@ -14,7 +14,7 @@
 
   <li>
     <strong>Course:</strong>
-    <%= @hole.course_id %>
+    <%= @hole.course.name %>
   </li>
 
 </ul>

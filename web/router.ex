@@ -23,6 +23,13 @@ defmodule Golf.Router do
     resources "/courses", CourseController do
       resources "/holes", HoleController
     end
+    resources "/rounds", RoundController do
+      get "player", RoundController, :new_player
+      post "player", RoundController, :create_player
+
+      get "score/:hole_id", RoundController, :record_score
+      post "score/:hole_id", RoundController, :save_score
+    end
   end
 
   # Other scopes may use custom stacks.
