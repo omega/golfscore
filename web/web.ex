@@ -58,6 +58,12 @@ defmodule Golf.Web do
       # XXX: NEed to move these somewhere, make our own helper maybe, and
       # import it here?
 
+
+      def short_name(name) do
+        # Get all capital letters?
+        Enum.map_join(String.split(name), &String.first/1)
+      end
+
       def gravatar(conn, email) do
         # lookup "x-forwarded-proto", and return based on that
         conn

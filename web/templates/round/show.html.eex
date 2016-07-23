@@ -26,7 +26,7 @@
   <thead>
     <tr><th>Holes</th>
       <%= for player <- @round.players do %>
-        <th><%= player.name %></th>
+        <th><%= short_name(player.name) %></th>
       <% end %>
       <th></th>
     </tr>
