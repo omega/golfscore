@@ -32,3 +32,4 @@
   </tbody>
 </table>
 
+<%= link "Delete round", to: round_path(@conn, :delete, @round), method: :delete, class: "button is-danger", data: [confirm: "Are you sure?"] %>

@@ -96,7 +96,7 @@ defmodule Golf.RoundController do
 
     conn
     |> put_flash(:info, "Round deleted successfully.")
-    |> redirect(to: round_path(conn, :index))
+    |> redirect(to: page_path(conn, :index))
   end
 
 
