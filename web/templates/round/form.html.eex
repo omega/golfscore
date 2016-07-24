@@ -7,7 +7,7 @@
 
   <%= label f, :date, class: "label" %>
   <p class="control">
-    <%= date_select f, :date, class: "input" %>
+    <input type="date" id="<%= field_id(f, :date) %>" name="<%= field_name(f, :date) %>" value="<%= field_value(f, :date) %>" class="input date">
     <%= error_tag f, :date %>
   </p>
 
