@@ -1,20 +1,10 @@
-<h2>Show round</h2>
-
-<ul>
-  <li>
-    <strong>Date:</strong>
-    <%= @round.date %>
-  </li>
-
-  <li>
-    <strong>Course:</strong>
-    <%= link @round.course.name, to: course_path(@conn, :show, @round.course) %>
-  </li>
-</ul>
+<h3 class="title">
+  <%= link @round.course.name, to: course_path(@conn, :show, @round.course) %> <small> @ <%= @round.date %></small>
+</h3>
 
 <%= link "Add player", to: round_round_path(@conn, :new_player, @round), class: "button is-primary" %>
 
-<%= link "Register scores", to: round_round_path(@conn, :record_score, @round, List.first(@round.course.holes)), class: "button is-primary" %>
+<%= link "Register scores", to: round_round_path(@conn, :record_score, @round, List.first(@round.course.holes)), class: "button is-primary is-pulled-right" %>
 <!--
   <ul>
   <%= for player <- @round.players do %>
@@ -27,9 +17,8 @@
   <thead>
     <tr><th>Holes</th>
       <%= for player <- @round.players do %>
-        <th class="has-text-centered"><%= short_name(player.name) %> <small><%= @finals[player.id] %></small></th>
+        <th class="has-text-centered"><%= short_name(player.name) %> <small> <%= @finals[player.id] %></small></th>
       <% end %>
-      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -38,8 +27,6 @@
         <%= for player <- @round.players do %>
           <td class="has-text-centered <%= score_class(hole.par, @scores[hole.id][player.id]) %>"><%= @scores[hole.id][player.id] %></td>
         <% end %>
-        <td>
-        </td>
       </tr>
     <% end %>
   </tbody>
