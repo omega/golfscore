@@ -10,7 +10,7 @@ defmodule Golf.RoundHoleUserScore do
     timestamps
   end
 
-  @required_fields ~w(score round user hole)
+  @required_fields ~w(score)
   @optional_fields ~w()
 
   @doc """
@@ -21,6 +21,6 @@ defmodule Golf.RoundHoleUserScore do
   """
   def changeset(model, params \\ :empty) do
     model
-    |> cast(params, @required_fields, @optional_fields)
+    |> cast(params, @required_fields)
   end
 end

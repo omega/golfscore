@@ -131,7 +131,7 @@ defmodule Golf.RoundController do
       select: rhus
     )
     |> Repo.preload([:user, :hole, :round])
-    |> Enum.group_by(fn(rhus) -> rhus.user.id end, fn(rhus) -> rhus.score end)
+    |> Enum.group_by(fn(rhus) -> rhus.user.id end, fn(rhus) -> "#{rhus.score}" end)
 
     Logger.debug inspect scores
     # need to figure out the _next_ hole as well?
@@ -150,12 +150,21 @@ defmodule Golf.RoundController do
       {score, _} = Integer.parse(scores[player_id])
       {player_id, _} = Integer.parse(player_id)
 
-      Repo.insert! %RoundHoleUserScore{
+      case Repo.get_by(RoundHoleUserScore,
         user_id: player_id,
-        round: conn.assigns[:round],
-        hole: conn.assigns[:hole],
-        score: score
-      }
+        round_id: conn.assigns[:round].id,
+        hole_id: conn.assigns[:hole].id
+      ) do
+        nil -> %RoundHoleUserScore{
+          user_id: player_id,
+          round: conn.assigns[:round],
+          hole: conn.assigns[:hole],
+          score: score
+        }
+        rhus -> rhus
+      end
+      |> RoundHoleUserScore.changeset(%{score: score})
+      |> Repo.insert_or_update!
     end
 
     # XXX: Need to find NEXT HOLE, to avoid going back to the main screen?

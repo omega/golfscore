@@ -2,7 +2,9 @@
 <h3>Hole <%= @hole.num %> <small>@ <%= @hole.course.name %>, par <%= @hole.par %></small></h3>
 
 <%= form_for @conn, round_round_path(@conn, :save_score, @round, @hole), [as: :score], fn f -> %>
+<%= if @next_hole do %>
 <%= hidden_input f, :next_hole, value: @next_hole.id %>
+<% end %>
 
   <%= for player <- @round.players do %>
     <label class="label"><%= player.name %></label>
