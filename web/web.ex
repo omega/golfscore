@@ -58,6 +58,20 @@ defmodule Golf.Web do
       # XXX: NEed to move these somewhere, make our own helper maybe, and
       # import it here?
 
+      def score_class(par, score) when not is_nil(score) do
+        case (score - par) do
+          -2 -> "is-eagle"
+          -1 -> "is-birdie"
+          0  -> "is-par"
+          1  -> "is-bogey"
+          2  -> "is-double-bogey"
+          _  -> "is-crap"
+        end
+      end
+
+      def score_class(par, score) do
+        ""
+      end
 
       def short_name(name) do
         # Get all capital letters?

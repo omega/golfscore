@@ -24,9 +24,16 @@ import $ from "jquery"
 
 if ($("body")) {
   $('.nav-toggle').on('click', function(e) {
-    console.log("clickety click", this, e);
     $(this).toggleClass('is-active');
     $(this).siblings('.nav-menu').toggleClass('is-active');
 
-  })
+  });
+
+  // XXX: This should probably be in a module etc..
+
+  $('.set-score').on('click', function(e) {
+    const val = e.target.textContent;
+    $(this).closest('.score-row').find('input[type="number"]').val(val);
+  });
+
 }

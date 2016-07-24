@@ -59,3 +59,26 @@ form.link {
     border-radius: 2px;
   }
 }
+
+
+.is-birdie {
+    background-color: $green;
+}
+
+.is-par {
+    //background-color: $turquoise;
+}
+.is-bogey {
+    background-color: $yellow;
+}
+.is-double-bogey {
+    background-color: $orange;
+}
+.is-crap {
+    background-color: $red;
+}
+
+
+table.table th.has-text-centered {
+    text-align: center;
+}

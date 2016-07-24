@@ -2,13 +2,24 @@
 <h3>Hole <%= @hole.num %> <small>@ <%= @hole.course.name %>, par <%= @hole.par %></small></h3>
 
 <%= form_for @conn, round_round_path(@conn, :save_score, @round, @hole), [as: :score], fn f -> %>
+<%= hidden_input f, :next_hole, value: @next_hole.id %>
 
   <%= for player <- @round.players do %>
     <label class="label"><%= player.name %></label>
-    <p class="control">
-    <input type="number" class="input" name="score[<%= player.id %>]" min="1" max="15">
-    </p>
+    <div class="columns is-mobile score-row">
+      <div class="column is-half">
+        <input type="number" class="input is-large" name="score[<%= player.id %>]" min="1" max="15" value="<%= @scores[player.id] %>">
+      </div>
+      <div class="column">
+        <div class="control has-addons">
+          <%= for n <- @hole.par-1 .. @hole.par+2 do %>
+            <button type="button" class="button set-score <%= score_class(@hole.par, n) %>"><%= n %></button>
+          <% end %>
+        </div>
+      </div>
+    </div>
   <% end %>
 
-<button class="button is-primary">Save</button>
+  <button class="button is-primary">Save</button>
+  <%= link "Back to the round", to: round_path(@conn, :show, @round), class: "button is-pulled-right" %>
 <% end %>

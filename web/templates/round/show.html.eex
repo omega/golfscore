@@ -14,6 +14,7 @@
 
 <%= link "Add player", to: round_round_path(@conn, :new_player, @round), class: "button is-primary" %>
 
+<%= link "Register scores", to: round_round_path(@conn, :record_score, @round, List.first(@round.course.holes)), class: "button is-primary" %>
 <!--
   <ul>
   <%= for player <- @round.players do %>
@@ -26,7 +27,7 @@
   <thead>
     <tr><th>Holes</th>
       <%= for player <- @round.players do %>
-        <th><%= short_name(player.name) %></th>
+        <th class="has-text-centered"><%= short_name(player.name) %></th>
       <% end %>
       <th></th>
     </tr>
@@ -35,10 +36,9 @@
     <%= for hole <- @round.course.holes do %>
       <tr><td><%= hole.num %> <small>par <%= hole.par %></small></td>
         <%= for player <- @round.players do %>
-          <td><%= @scores[hole.id][player.id] %></td>
+          <td class="has-text-centered <%= score_class(hole.par, @scores[hole.id][player.id]) %>"><%= @scores[hole.id][player.id] %></td>
         <% end %>
         <td>
-          <%= link "Register score", to: round_round_path(@conn, :record_score, @round, hole), class: "button is-primary is-small" %>
         </td>
       </tr>
     <% end %>

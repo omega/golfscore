@@ -56,6 +56,10 @@ defmodule Golf.RoundController do
     )
     sums = Enum.into(Enum.map(temp, fn {hole, scores} -> {hole, Enum.into(scores, %{})} end), %{})
 
+    Logger.debug inspect sums
+
+    # Next hole is the first hole with no score on it?
+    
     render(conn, "show.html", round: round, scores: sums)
   end
 
@@ -119,13 +123,26 @@ defmodule Golf.RoundController do
       |> Repo.preload(:course)
       |> Repo.preload(:players)
     hole = conn.assigns[:hole]
-    |> Repo.preload(:course)
-    Logger.debug inspect hole
-    render(conn, "score.html", hole: hole, round: round)
+    |> Repo.preload([{:course, :holes}])
+
+    scores = Repo.all(
+      from rhus in RoundHoleUserScore,
+      where: rhus.round_id == ^round.id and rhus.hole_id == ^hole.id,
+      select: rhus
+    )
+    |> Repo.preload([:user, :hole, :round])
+    |> Enum.group_by(fn(rhus) -> rhus.user.id end, fn(rhus) -> rhus.score end)
+
+    Logger.debug inspect scores
+    # need to figure out the _next_ hole as well?
+    next_hole = Enum.find(hole.course.holes, fn(h) -> h.num == (hole.num + 1) end)
+
+    render(conn, "score.html", hole: hole, next_hole: next_hole, round: round, scores: scores)
   end
 
   def save_score(conn, params) do
     scores = params["score"]
+    {next_hole, scores} = Map.pop(scores, "next_hole")
 
     for player_id <- Map.keys(scores) do
 
@@ -142,7 +159,11 @@ defmodule Golf.RoundController do
     end
 
     # XXX: Need to find NEXT HOLE, to avoid going back to the main screen?
-    redirect(conn, to: round_path(conn, :show, conn.assigns[:round]))
+    if (next_hole) do
+      redirect(conn, to: round_round_path(conn, :record_score, conn.assigns[:round], next_hole))
+    else
+      redirect(conn, to: round_path(conn, :show, conn.assigns[:round]))
+    end
   end
 
   defp assign_hole(conn, _opts) do
