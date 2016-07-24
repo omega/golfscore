@@ -21,6 +21,6 @@
 <h3>Rounds</h3>
 <ul>
   <%= for round <- @user.rounds do %>
-    <li><%= round.id %></li>
+    <li><%= link "#{round.course.name} @ #{round.date}", to: round_path(@conn, :show, round) %></li>
   <% end %>
 </ul>

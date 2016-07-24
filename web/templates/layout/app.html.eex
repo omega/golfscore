@@ -59,13 +59,6 @@
             </div>
           </div>
         </div>
-      <div class="hero-body">
-        <div class="container">
-          <h2 class="subtitle">
-            Letting you track the progress of your friends since 2016
-          </h2>
-        </div>
-      </div>
     </section>
     <%= render_flash(@conn) %>
     <section class="section">

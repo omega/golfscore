@@ -27,7 +27,7 @@
   <thead>
     <tr><th>Holes</th>
       <%= for player <- @round.players do %>
-        <th class="has-text-centered"><%= short_name(player.name) %></th>
+        <th class="has-text-centered"><%= short_name(player.name) %> <small><%= @finals[player.id] %></small></th>
       <% end %>
       <th></th>
     </tr>

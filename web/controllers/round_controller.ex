@@ -56,11 +56,15 @@ defmodule Golf.RoundController do
     )
     sums = Enum.into(Enum.map(temp, fn {hole, scores} -> {hole, Enum.into(scores, %{})} end), %{})
 
-    Logger.debug inspect sums
+    temp = Enum.group_by(scores, fn(rhus) -> rhus.user.id end, fn(rhus) -> rhus.score - rhus.hole.par end)
+
+    finals = Enum.into(Enum.map(temp, fn {user, scores} -> {user, Enum.reduce(scores, 0, fn(acc, x) -> acc + x end) } end ), %{})
+
+    Logger.debug inspect finals
+
 
     # Next hole is the first hole with no score on it?
-    
-    render(conn, "show.html", round: round, scores: sums)
+    render(conn, "show.html", round: round, scores: sums, finals: finals)
   end
 
   def edit(conn, %{"id" => id}) do

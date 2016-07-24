@@ -25,7 +25,7 @@ defmodule Golf.UserController do
 
   def show(conn, %{"id" => id}) do
     user = Repo.get!(User, id)
-    |> Repo.preload(:rounds)
+    |> Repo.preload([{:rounds, :course}])
     render(conn, "show.html", user: user)
   end
 
