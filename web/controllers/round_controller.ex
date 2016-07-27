@@ -6,6 +6,7 @@ defmodule Golf.RoundController do
   alias Golf.Course
   alias Golf.RoundUser
   alias Golf.User
+  alias Golf.Hole
   alias Golf.RoundHoleUserScore
 
   plug :scrub_params, "round" when action in [:create, :update]
@@ -40,7 +41,7 @@ defmodule Golf.RoundController do
 
   def show(conn, %{"id" => id}) do
     round = Repo.get!(Round, id)
-      |> Repo.preload([{:course, :holes}])
+      |> Repo.preload( [ { :course, [holes: from(h in Hole, order_by: h.num) ] } ] )
       |> Repo.preload(:players)
     scores = Repo.all(
       from rhus in RoundHoleUserScore,
